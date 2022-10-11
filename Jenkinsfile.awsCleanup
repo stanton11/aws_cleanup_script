@@ -1,4 +1,4 @@
-pipeline {
+node {
     agent any
 
     environment {
@@ -7,13 +7,12 @@ pipeline {
     REPO_URL = "git@github.com:stanton11/aws_cleanup_script.git"
     }
 
-    node {
     stages {
-      stage('Build Name') {
-    steps {
-      // The build name must be unique, or the JUnit trend will crap out.
-      buildName "#${BUILD_NUMBER} ${sh(script: 'git log --oneline --format=%B HEAD | head -n 1', returnStdout: true)}"
-    }
+        stage('Build Name') {
+      steps {
+        // The build name must be unique, or the JUnit trend will crap out.
+        buildName "#${BUILD_NUMBER} ${sh(script: 'git log --oneline --format=%B HEAD | head -n 1', returnStdout: true)}"
+      }
     }
 
     stage('Clone Git Repo') {
@@ -44,9 +43,6 @@ pipeline {
       cleanWs()
     }
   }
-  }
-
-    
 }
 
   
