@@ -13,8 +13,6 @@ addresses = response['Addresses']
 for address in addresses:
     if 'AssociationId' not in address:
         response = ec2.release_address(AllocationId=address['AllocationId'])
-        print(response)
-        print()
 
 # retrieve all ec2 network interfaces
 response = ec2.describe_network_interfaces()
@@ -26,4 +24,3 @@ interfaces = response['NetworkInterfaces']
 for interface in interfaces:
     if interface.get('Status') == 'available':
         response = ec2.delete_network_interface(NetworkInterfaceId=interface['NetworkInterfaceId'])
-        print(response)
