@@ -38,7 +38,9 @@ pipeline {
         }
       }
     }
+  }
   
+<<<<<<< HEAD
     post {
       always {
         // Clean up the workspace to free disk space.
@@ -46,6 +48,9 @@ pipeline {
       }
     }
   }
+=======
+>>>>>>> 8ae1eed (added specific node)
 }
+
 
   
