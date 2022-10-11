@@ -38,10 +38,9 @@ pipeline {
 
     post {
 
-    success {
-    }
-
-    failure {
+    always {
+      // Clean up the workspace to free disk space.
+      cleanWs()
     }
   }
 }
