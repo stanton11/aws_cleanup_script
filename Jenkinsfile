@@ -1,12 +1,16 @@
 pipeline {
   agent any
+  environment {
+    GITLAB_CREDENTIALS = credentials('gitlab-couchbaseqe')
+    REPO_URL = "git@github.com:stanton11/aws_cleanup_script.git"
+  }
   stages {
     stage('Clone Git Repo') {
       steps {
         sh 'mkdir -p build'
-        sh '''dir(\'build\') {
-            git branch: \'master\', credentialsId:     $GITLAB_CREDENTIALS, url: $REPO_URL
-        }  '''
+        dir('build') {
+            git branch: 'master', credentialsId:     $GITLAB_CREDENTIALS, url: $REPO_URL
+            }
         }
       }
 
@@ -19,5 +23,10 @@ pipeline {
         }
       }
 
+    }
+    post {
+      always {
+        cleanWs()
+      }
     }
   }
