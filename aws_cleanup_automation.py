@@ -1,7 +1,10 @@
 import boto3
+from sys import argv
+
+ACCESS_KEY, SECRET_KEY = argv
 
 # create etc3 client
-ec2 = boto3.client('ec2')
+ec2 = boto3.client('ec2', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY)
 
 # retrieve all ec2 
 response = ec2.describe_addresses()
