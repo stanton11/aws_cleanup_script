@@ -30,13 +30,14 @@ pipeline {
     }
 
     stage('Clone Git Repo') {
-      // Clones the repository from the current branch name
-      sh 'mkdir -p build'
+      steps {
+        // Clones the repository from the current branch name
+        sh 'mkdir -p build'
 
-      dir('build') {
-          git branch: 'master', credentialsId: 	GITLAB_CREDENTIALS, url: REPO_URL
-      }     
-
+        dir('build') {
+            git branch: 'master', credentialsId: 	GITLAB_CREDENTIALS, url: REPO_URL
+        }     
+      }
     }
 
     stage('Run Script') {
