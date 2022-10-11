@@ -1,20 +1,6 @@
 pipeline {
   agent any
 
-  options {
-    timestamps()
-
-    // Discard any stale builds so we don't fill up the disk.
-    buildDiscarder(
-      logRotator(
-        artifactDaysToKeepStr: '30',
-        artifactNumToKeepStr: '50',
-        daysToKeepStr: '30',
-        numToKeepStr: '50',
-      )
-    )
-  }
-
   environment {
     DOCKER_CREDENTIALS = credentials('dockerhub-couchbaseqe')
     GITLAB_CREDENTIALS = credentials('gitlab-couchbaseqe')
@@ -22,6 +8,17 @@ pipeline {
   }
 
   stages {
+    stage('Checkout') {
+      steps {
+        checkout(
+          [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, 
+            extensions: [], submoduleCfg: [], 
+              userRemoteConfigs: [[credentialsId: 'deea6285-5482-4b54-9c69-744e8fcfe322', 
+                url: 'git@github.com:stanton11/aws_cleanup_script.git']]]
+        )
+      }
+    }
+    
     stage('Build Name') {
       steps {
         // The build name must be unique, or the JUnit trend will crap out.
@@ -35,7 +32,7 @@ pipeline {
         sh 'mkdir -p build'
 
         dir('build') {
-            git branch: 'master', credentialsId: 	GITLAB_CREDENTIALS, url: REPO_URL
+            git branch: 'master', credentialsId: 	$GITLAB_CREDENTIALS, url: $REPO_URL
         }     
       }
     }
