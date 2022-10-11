@@ -1,14 +1,14 @@
 pipeline {
-  agent any
+    agent any
 
-  environment {
+    environment {
     DOCKER_CREDENTIALS = credentials('dockerhub-couchbaseqe')
     GITLAB_CREDENTIALS = credentials('gitlab-couchbaseqe')
     REPO_URL = "git@github.com:stanton11/aws_cleanup_script.git"
-  }
+    }
 
-  node {
-    stage('Build Name') {
+    stages {
+        stage('Build Name') {
       steps {
         // The build name must be unique, or the JUnit trend will crap out.
         buildName "#${BUILD_NUMBER} ${sh(script: 'git log --oneline --format=%B HEAD | head -n 1', returnStdout: true)}"
@@ -34,15 +34,16 @@ pipeline {
         sh '. venv/bin/activate && python3 aws_cleanup_automation.py'
       }
     }
+    }
+
     post {
-      always {
-        // Clean up the workspace to free disk space.
-        cleanWs()
-      }
+
+    success {
+    }
+
+    failure {
     }
   }
-  
 }
-
 
   
