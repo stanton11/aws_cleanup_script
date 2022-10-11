@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-    DOCKER_CREDENTIALS = credentials('dockerhub-couchbaseqe')
+    // DOCKER_CREDENTIALS = credentials('dockerhub-couchbaseqe')
     GITLAB_CREDENTIALS = credentials('gitlab-couchbaseqe')
     REPO_URL = "git@github.com:stanton11/aws_cleanup_script.git"
     }
