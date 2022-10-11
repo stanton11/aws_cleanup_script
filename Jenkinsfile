@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh 'mkdir -p build'
         sh 'cd build'
-        sh 'git clone git@github.com:stanton11/aws_cleanup_script.git'
+        sh 'git clone https://github.com/stanton11/aws_cleanup_script.git'
       }
     }
     
