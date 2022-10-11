@@ -49,11 +49,9 @@ pipeline {
     }
 
   post {
-    always {
-    }
     cleanup {
       // Clean up the workspace to free disk space.
       cleanWs()
     }
   }
-}
+}}
